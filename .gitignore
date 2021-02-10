@@ -35,5 +35,8 @@
 cmake-build-debug
 cmake-build-debug-coverage
 .idea
+Resources/Textures
+Resources/Shaders/
 Resources
 Documentation
+Documentation/*
