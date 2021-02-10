@@ -6,7 +6,7 @@
 #include <glm/vec2.hpp>
 
 class IStateHolder;
-class IUserInput;
+class IUserInputGetter;
 
 /// @brief Interface used for states that would be passed to MainLoop.
 class IState
@@ -17,9 +17,9 @@ public:
     /// @param stateHolder Pointer to MainLoop.
     /// IStateHolder restricts usage of MainLoop only to stateStack manipulation.
     /// @param userInput Pointer to UserInput class.
-    /// IUserInput restricts usage of UserInput to only getting input information, not setting.
+    /// IUserInputGetter restricts usage of UserInput to only getting input information, not setting.
     /// @param resolution Window/viewport resolution.
-    virtual void initialize(IStateHolder *stateHolder, IUserInput *userInput, glm::ivec2 &resolution) = 0;
+    virtual void initialize(IStateHolder *stateHolder, IUserInputGetter *userInput, const glm::ivec2 resolution) = 0;
     /// Destructor. Should unload resources and free heap memory.
     virtual void destroy() = 0;
     /// There you should load every resource that your state uses.

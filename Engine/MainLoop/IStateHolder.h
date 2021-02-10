@@ -6,7 +6,6 @@ class IState;
 
 /// @brief Interface is used for passing MainLoop to states
 /// without giving state too much power over MainLoop cycle.
-/// @see IState
 class IStateHolder
 {
 public:
@@ -21,7 +20,6 @@ public:
     /// @brief Pop all states in MainLoop's stateStack.
     /// Indicates that we want to exit application if no other states pushed.
     virtual void popAllStates() = 0;
-
 };
 
 #endif //SDL2OPENGL_ISTATEHOLDER_H

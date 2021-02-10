@@ -7,6 +7,7 @@
 class MainLoop;
 class IState;
 
+/// @brief Command pattern that will pop one state from MainLoop.
 class MainLoopCommandPopState : public virtual IMainLoopCommand
 {
 public:
@@ -15,8 +16,11 @@ private:
     std::stack<IState *> *stateStack = nullptr;
 
 public:
-    void initialize(std::stack<IState *> *stateStack);
-    void execute() override;
+    /// @brief Command constructor.
+    void initialize(std::stack<IState *> *stateStack) noexcept;
+    /// @see IMainLoopCommand.
+    /// @throw std::runtime_error if state stack is empty.
+    void execute() const override;
 
 private:
 

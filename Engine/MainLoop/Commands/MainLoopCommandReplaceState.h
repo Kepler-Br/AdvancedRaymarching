@@ -7,8 +7,9 @@
 
 class IState;
 class IStateHolder;
-class IUserInput;
+class IUserInputGetter;
 
+/// @brief Command pattern that will replace top state in MainLoop.
 class MainLoopCommandReplaceState : public virtual IMainLoopCommand
 {
 public:
@@ -17,13 +18,16 @@ private:
     std::stack<IState *> *stateStack = nullptr;
     IState *stateToEmplaceWith = nullptr;
     IStateHolder *stateHolder = nullptr;
-    IUserInput *userInput = nullptr;
+    IUserInputGetter *userInput = nullptr;
     glm::ivec2 screenResolution;
 
 public:
+    /// @brief Command constructor.
     void initialize(std::stack<IState *> *stateStack, IState *stateToEmplaceWith, IStateHolder *stateHolder,
-                    glm::ivec2 &screenResolution, IUserInput *userInput);
-    void execute() override;
+                    glm::ivec2 screenResolution, IUserInputGetter *userInput) noexcept;
+    /// @see IMainLoopCommand.
+    /// @throw std::runtime_error if state stack is empty.
+    void execute() const override;
 
 private:
 

@@ -1,8 +1,10 @@
 #ifndef SDL2OPENGL_GLERROR_H
 #define SDL2OPENGL_GLERROR_H
 
+#include <string>
 #include <GL/glew.h>
-#include "GLErrorException.h"
+#include <GL/gl.h>
+#include "../Exceptions/GLErrorException.h"
 
 
 /// @brief Utility class. Converts glGetError result to string and

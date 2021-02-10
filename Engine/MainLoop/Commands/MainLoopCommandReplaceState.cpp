@@ -4,8 +4,8 @@
 #include "../IStateHolder.h"
 
 void MainLoopCommandReplaceState::initialize(std::stack<IState *> *stateStack, IState *stateToEmplaceWith,
-                                             IStateHolder *stateHolder, glm::ivec2 &screenResolution,
-                                             IUserInput *userInput)
+                                             IStateHolder *stateHolder, glm::ivec2 screenResolution,
+                                             IUserInputGetter *userInput) noexcept
 {
     this->stateStack = stateStack;
     this->stateToEmplaceWith = stateToEmplaceWith;
@@ -14,12 +14,12 @@ void MainLoopCommandReplaceState::initialize(std::stack<IState *> *stateStack, I
     this->userInput = userInput;
 }
 
-void MainLoopCommandReplaceState::execute()
+void MainLoopCommandReplaceState::execute() const
 {
     this->stateHolder->popState();
     this->stateToEmplaceWith->initialize(this->stateHolder,
                                          this->userInput,
-                                       this->screenResolution);
+                                        this->screenResolution);
     this->stateToEmplaceWith->loadResources();
     this->stateHolder->pushState(this->stateToEmplaceWith);
 }

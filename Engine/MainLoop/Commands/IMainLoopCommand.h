@@ -3,10 +3,12 @@
 
 #include <stack>
 
+/// @brief Interface that each MainLoop state class should implement.
 class IMainLoopCommand
 {
 public:
-    virtual void execute() = 0;
+    /// @brief Starts the command. Alters MainLoop internal state stack.
+    virtual void execute() const = 0;
 };
 
 #endif //SDL2OPENGL_IMAINLOOPCOMMAND_H
