@@ -7,16 +7,18 @@
 #include "Commands/MainLoopCommandReplaceState.h"
 #include "Commands/IMainLoopCommand.h"
 
-MainLoop::MainLoop(glm::ivec2 screenResolution, SDL_Window *window)
+MainLoop::MainLoop(IWindow *window, IUserInput *userInput, IDeltatimeCalculator *deltatimeCalculator)
 {
-    this->screenResolution = screenResolution;
     this->window = window;
+    this->userInput = userInput;
+    this->deltatimeCalculator = deltatimeCalculator;
 }
 
 void MainLoop::run()
 {
     IState *topState;
     GLfloat timeSinceLastFixedUpdate = 0.0f;
+    GLfloat deltatime = 1.0f;
 
     this->executeCommands();
     if (stateStack.empty())
@@ -24,12 +26,15 @@ void MainLoop::run()
     this->isRunning = GL_TRUE;
     while (this->isRunning)
     {
-        this->calculateDeltatime();
-        timeSinceLastFixedUpdate += this->deltatime;
+        this->window->clear();
+        this->deltatimeCalculator->calculate();
+        deltatime = this->deltatimeCalculator->get();
+        timeSinceLastFixedUpdate += deltatime;
         topState = this->stateStack.top();
         topState->first();
-        topState->input(this->deltatime);
-        topState->update(this->deltatime);
+        this->userInput->update();
+        topState->input(deltatime);
+        topState->update(deltatime);
         while (timeSinceLastFixedUpdate > MainLoop::timePerFixedUpdate)
         {
             topState->fixedUpdate(MainLoop::timePerFixedUpdate);
@@ -38,8 +43,8 @@ void MainLoop::run()
         topState->preDraw();
         topState->draw();
         topState->postDraw();
-        SDL_GL_SwapWindow(this->window);
         topState->last();
+        this->window->swapBuffers();
         this->executeCommands();
         if (this->stateStack.empty())
             this->isRunning = GL_FALSE;
@@ -51,7 +56,7 @@ void MainLoop::pushState(IState *state)
     auto *command = new MainLoopCommandPushState;
 
     command->initialize(&this->stateStack, state, (IStateHolder *)this, MainLoop::maximumStates,
-                        this->screenResolution, (IUserInput *)&this->userInput);
+                        this->window->getResolution(), (IUserInputGetter *)&this->userInput);
     this->commandQueue.push(std::unique_ptr<IMainLoopCommand>(command));
 }
 
@@ -68,7 +73,7 @@ void MainLoop::replaceState(IState *state)
     auto *command = new MainLoopCommandReplaceState;
 
     command->initialize(&this->stateStack, state, (IStateHolder *)this,
-                        this->screenResolution, (IUserInput *)&this->userInput);
+                        this->window->getResolution(), (IUserInputGetter *)&this->userInput);
     this->commandQueue.push(std::unique_ptr<IMainLoopCommand>(command));
 }
 
@@ -87,9 +92,4 @@ void MainLoop::executeCommands()
         this->commandQueue.front()->execute();
         this->commandQueue.pop();
     }
-}
-
-void MainLoop::calculateDeltatime()
-{
-    this->deltatime = 1.0f;
 }

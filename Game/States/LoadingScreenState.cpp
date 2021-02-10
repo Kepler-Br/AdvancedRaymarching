@@ -1,7 +1,7 @@
 #include "LoadingScreenState.h"
-#include "../IO/Sdl2IO.h"
-#include "GLShaderBindings.h"
-#include "../MainLoop/IStateHolder.h"
+#include "Engine/IO/IO.h"
+#include "Engine/Bindings/GLShaderBindings.h"
+#include "../../Engine/MainLoop/IStateHolder.h"
 #include <SDL2/SDL.h>
 
 LoadingScreenState::LoadingScreenState(IState *stateToLoad)
@@ -9,9 +9,8 @@ LoadingScreenState::LoadingScreenState(IState *stateToLoad)
     this->stateToLoad = stateToLoad;
 }
 
-void LoadingScreenState::initialize(IStateHolder *stateHolder, IUserInput *userInput, glm::ivec2 &resolution)
+void LoadingScreenState::initialize(IStateHolder *stateHolder, IUserInputGetter *userInput, const glm::ivec2 resolution)
 {
-    this->io = new Sdl2IO;
     this->stateHolder = stateHolder;
     this->userInput = userInput;
     this->resolution = resolution;
@@ -23,7 +22,6 @@ void LoadingScreenState::destroy()
     this->loadingTexture.destroy();
     this->vertexBuffer.destroy();
     this->textureBuffer.destroy();
-    delete this->io;
 }
 
 void LoadingScreenState::loadResources()
@@ -40,12 +38,13 @@ void LoadingScreenState::loadResources()
             1.0, 1.0,
             1.0, 0.0,
     };
+    const IIO *io = IO::getInstance();
 
     std::cout << "LoadingScreenState: Loading resources." << std::endl;
     if (this->resourcesLoaded)
         return;
     this->resourcesLoaded = GL_TRUE;
-    this->loadingTexture.initialize(this->io->readBmpTexture("./textures/loading.bmp"), GL_RGB,
+    this->loadingTexture.initialize(io->readBmpTexture("./Resources/Textures/loading.bmp"), GL_RGB,
                                     GL_BGR, GL_UNSIGNED_BYTE, GL_FALSE);
     this->loadingTexture.setWrap(GL_REPEAT, GL_FALSE);
     this->loadingTexture.setMagnifyingFilter(GL_NEAREST, GL_FALSE);
@@ -53,7 +52,7 @@ void LoadingScreenState::loadResources()
     this->loadingTexture.unbind();
     this->vertexBuffer.initialize(vertices, 8, GL_ARRAY_BUFFER, GL_STATIC_DRAW);
     this->textureBuffer.initialize(texCoords, 8, GL_ARRAY_BUFFER, GL_STATIC_DRAW);
-    this->shader.initialize("./Shaders/vertex.vert", "./Shaders/fragment.frag");
+    this->shader.initialize("./Resources/Shaders/vertex.vert", "./Resources/Shaders/fragment.frag");
     this->vao.bind();
     this->vertexBuffer.bind();
     GLint attributeTextureCoords = shader.getAttributeLocation("texCoord");

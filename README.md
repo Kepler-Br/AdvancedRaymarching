@@ -1,6 +1,6 @@
 # AdvancedRaymarching
 Advanced raymarching implementation based upon simple engine that encapsulates SDL2 and OpenGL functions.  
-Engine part is 100% documented. Feel free to read understand and edit it.
+Engine part is 100% documented. Feel free to read, understand and edit it.
 
 ## Compilation
 ```
@@ -12,6 +12,6 @@ make -j
 Everything should be inside `build` directory.
 
 ## Engine documentation generation
-`doxygen doxygen.cfg`  
+`doxygen Doxyfile`  
 Everything should be inside `Documentation` folder.  
 Now open `./Documentation/html/index.html`.

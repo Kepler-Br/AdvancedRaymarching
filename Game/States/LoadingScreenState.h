@@ -2,12 +2,12 @@
 #define SDL2OPENGL_LOADINGSCREENSTATE_H
 
 #include <iostream>
-#include "../MainLoop/IState.h"
-#include "../Incapsulated/GLTexture2D.h"
-#include "../Incapsulated/GLBuffer.h"
-#include "../Incapsulated/Shader.h"
-#include "../Incapsulated/GLVertexArrayObject.h"
-#include "../IO/IIO.h"
+#include "../../Engine/MainLoop/IState.h"
+#include "../../Engine/Incapsulated/GLTexture2D.h"
+#include "../../Engine/Incapsulated/GLBuffer.h"
+#include "../../Engine/Incapsulated/Shader.h"
+#include "../../Engine/Incapsulated/GLVertexArrayObject.h"
+#include "Engine/UserInterfaces/IIO.h"
 
 class LoadingScreenState : public virtual IState
 {
@@ -20,9 +20,8 @@ private:
     GLBuffer<GLfloat> textureBuffer;
     Shader shader;
     GLVertexArrayObject vao;
-    IIO *io;
     IStateHolder *stateHolder;
-    IUserInput *userInput;
+    IUserInputGetter *userInput;
     IState *stateToLoad;
     glm::ivec2 resolution;
     GLuint cyclesPassed = 0;
@@ -30,7 +29,7 @@ private:
 public:
     LoadingScreenState(IState *stateToLoad);
 
-    void initialize(IStateHolder *stateHolder, IUserInput *userInput, glm::ivec2 &resolution) override;
+    void initialize(IStateHolder *stateHolder, IUserInputGetter *userInput, const glm::ivec2 resolution) override;
     void destroy() override;
     void loadResources() override;
     void fixedUpdate(const GLfloat deltatime) override;

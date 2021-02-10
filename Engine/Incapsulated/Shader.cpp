@@ -1,9 +1,8 @@
 #include <tuple>
-#include "ShaderErrorException.h"
+#include "../Exceptions/ShaderErrorException.h"
 #include "Shader.h"
-#include "GLShaderBindings.h"
-#include "../IO/RawIO.h"
-#include <memory>
+#include "../Bindings/GLShaderBindings.h"
+#include "../IO/IO.h"
 
 Shader::Shader(const std::string &vertexPath, const std::string &fragmentPath)
 {
@@ -12,7 +11,7 @@ Shader::Shader(const std::string &vertexPath, const std::string &fragmentPath)
 
 void Shader::initialize(const std::string &vertexPath, const std::string &fragmentPath)
 {
-    const std::unique_ptr<IIO> io(new RawIO);
+    const IIO *io = IO::getInstance();
     const std::string vertexSource = io->readWholeFileAsString(vertexPath);
     const std::string fragmentSource = io->readWholeFileAsString(fragmentPath);
 

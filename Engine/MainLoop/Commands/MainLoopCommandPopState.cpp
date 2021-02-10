@@ -2,12 +2,12 @@
 #include "../IState.h"
 #include <stdexcept>
 
-void MainLoopCommandPopState::initialize(std::stack<IState *> *stateStack)
+void MainLoopCommandPopState::initialize(std::stack<IState *> *stateStack) noexcept
 {
     this->stateStack = stateStack;
 }
 
-void MainLoopCommandPopState::execute()
+void MainLoopCommandPopState::execute() const
 {
     IState *state;
 

@@ -1,14 +1,17 @@
 #ifndef SDL2OPENGL_MAINLOOP_H
 #define SDL2OPENGL_MAINLOOP_H
 
-#include "IStateHolder.h"
-#include "IState.h"
-#include "UserInput.h"
+
 #include <stack>
 #include <queue>
 #include <memory>
 #include <SDL2/SDL.h>
 #include "./Commands/IMainLoopCommand.h"
+#include "../UserInterfaces/IUserInput.h"
+#include "../UserInterfaces/IDeltatimeCalculator.h"
+#include "../UserInterfaces/IWindow.h"
+#include "IStateHolder.h"
+#include "IState.h"
 
 /// @brief MainLoop is the class that is used to start main cycle.
 /// Will throw an error if state is not pushed in state stack.
@@ -20,17 +23,16 @@ public:
 private:
     std::stack<IState *> stateStack;
     std::queue<std::unique_ptr<IMainLoopCommand>> commandQueue;
-    glm::ivec2 screenResolution;
-    UserInput userInput;
     GLboolean isRunning;
-    GLfloat deltatime;
-    SDL_Window *window;
+    IUserInput *userInput;
+    IWindow *window;
+    IDeltatimeCalculator *deltatimeCalculator;
 
     static constexpr GLsizei maximumStates = 10;
     static constexpr GLfloat timePerFixedUpdate = 5.0f;
 
 public:
-    MainLoop(glm::ivec2 screenResolution, SDL_Window *window);
+    MainLoop(IWindow *window, IUserInput *userInput, IDeltatimeCalculator *deltatimeCalculator);
 
     /// @brief Start MainLoop's cycle.
     /// @throw std::runtime_error if stateStack is empty.
@@ -59,8 +61,6 @@ private:
     /// @brief Execute every command, that is related to state stack, in the command queue.
     /// @throw May throw any exception that is thrown during command execution.
     void executeCommands();
-    /// @brief Calculate time since last cycle.
-    void calculateDeltatime();
 };
 
 #endif //SDL2OPENGL_MAINLOOP_H

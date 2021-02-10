@@ -1,5 +1,5 @@
 #include "GLVertexArrayObject.h"
-#include "GLBufferBindings.h"
+#include "../Bindings/GLBufferBindings.h"
 
 GLVertexArrayObject::GLVertexArrayObject()
 {

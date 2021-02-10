@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include "GLBuffer.h"
 #include "GLError.h"
-#include "GLBufferBindings.h"
+#include "../Bindings/GLBufferBindings.h"
 
 /// @brief Encapsulated OpenGL's Vertex Buffer Object capable of uploading data to GPU.
 /// @tparam T should only be simple types like int, double, float.

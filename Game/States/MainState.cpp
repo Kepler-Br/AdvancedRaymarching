@@ -1,11 +1,10 @@
 #include "MainState.h"
-
 #include <SDL2/SDL.h>
-#include "../IO/Sdl2IO.h"
-#include "GLShaderBindings.h"
-#include "../MainLoop/IStateHolder.h"
+#include "Engine/IO/IO.h"
+#include "Engine/Bindings/GLShaderBindings.h"
+#include "../../Engine/MainLoop/IStateHolder.h"
 
-void MainState::initialize(IStateHolder *stateHolder, IUserInput *userInput, glm::ivec2 &resolution)
+void MainState::initialize(IStateHolder *stateHolder, IUserInputGetter *userInput, const glm::ivec2 resolution)
 {
     this->stateHolder = stateHolder;
     this->userInput = userInput;
@@ -18,7 +17,6 @@ void MainState::destroy()
     this->loadingTexture.destroy();
     this->vertexBuffer.destroy();
     this->textureBuffer.destroy();
-    delete this->io;
 }
 
 void MainState::loadResources()
@@ -35,13 +33,13 @@ void MainState::loadResources()
             1.0, 1.0,
             1.0, 0.0,
     };
+    const IIO *io = IO::getInstance();
 
     if (this->resourcesLoaded)
         return;
     std::cout << "MainState: Loading resources." << std::endl;
-    this->io = new Sdl2IO;
     this->resourcesLoaded = GL_TRUE;
-    this->loadingTexture.initialize(this->io->readBmpTexture("./textures/skeletor.bmp"), GL_RGB,
+    this->loadingTexture.initialize(io->readBmpTexture("./Resources/Textures/skeletor.bmp"), GL_RGB,
                                     GL_BGR, GL_UNSIGNED_BYTE, GL_FALSE);
     this->loadingTexture.setWrap(GL_REPEAT, GL_FALSE);
     this->loadingTexture.setMagnifyingFilter(GL_NEAREST, GL_FALSE);
@@ -49,7 +47,7 @@ void MainState::loadResources()
     this->loadingTexture.unbind();
     this->vertexBuffer.initialize(vertices, 8, GL_ARRAY_BUFFER, GL_STATIC_DRAW);
     this->textureBuffer.initialize(texCoords, 8, GL_ARRAY_BUFFER, GL_STATIC_DRAW);
-    this->shader.initialize("./Shaders/vertex.vert", "./Shaders/fragment.frag");
+    this->shader.initialize("./Resources/Shaders/vertex.vert", "./Resources/Shaders/fragment.frag");
     this->vao.bind();
     this->vertexBuffer.bind();
     GLint attributeTextureCoords = shader.getAttributeLocation("texCoord");

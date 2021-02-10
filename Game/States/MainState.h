@@ -1,12 +1,12 @@
 #ifndef SDL2OPENGL_MAINSTATE_H
 #define SDL2OPENGL_MAINSTATE_H
 
-#include "../MainLoop/IState.h"
-#include "../Incapsulated/GLTexture2D.h"
-#include "../Incapsulated/GLBuffer.h"
-#include "../Incapsulated/Shader.h"
-#include "../Incapsulated/GLVertexArrayObject.h"
-#include "../IO/IIO.h"
+#include "../../Engine/MainLoop/IState.h"
+#include "../../Engine/Incapsulated/GLTexture2D.h"
+#include "../../Engine/Incapsulated/GLBuffer.h"
+#include "../../Engine/Incapsulated/Shader.h"
+#include "../../Engine/Incapsulated/GLVertexArrayObject.h"
+#include "Engine/UserInterfaces/IIO.h"
 #include <iostream>
 
 class MainState : public virtual IState
@@ -20,13 +20,12 @@ private:
     GLBuffer<GLfloat> textureBuffer;
     Shader shader;
     GLVertexArrayObject vao;
-    IIO *io;
     IStateHolder *stateHolder;
-    IUserInput *userInput;
+    IUserInputGetter *userInput;
     glm::ivec2 resolution;
 
 public:
-    void initialize(IStateHolder *stateHolder, IUserInput *userInput, glm::ivec2 &resolution) override;
+    void initialize(IStateHolder *stateHolder, IUserInputGetter *userInput, const glm::ivec2 resolution) override;
     void destroy() override;
     void loadResources() override;
     void fixedUpdate(const GLfloat deltatime) override;
