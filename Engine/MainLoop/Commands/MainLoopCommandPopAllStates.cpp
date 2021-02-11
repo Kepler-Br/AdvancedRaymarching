@@ -11,6 +11,8 @@ void MainLoopCommandPopAllStates::execute() const
 {
     IState *state;
 
+    if (this->stateStack == nullptr)
+        throw std::runtime_error("Command was not initialized.");
     while (!this->stateStack->empty())
     {
         state = this->stateStack->top();

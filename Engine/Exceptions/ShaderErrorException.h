@@ -1,6 +1,7 @@
 #ifndef SDL2OPENGL_SHADERERROREXCEPTION_H
 #define SDL2OPENGL_SHADERERROREXCEPTION_H
 
+#include <stdexcept>
 #include "GLErrorException.h"
 
 /// @brief Thrown every time Shader compilation or link process fails.

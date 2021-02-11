@@ -1,19 +1,16 @@
 #include "LoadingScreenState.h"
 #include "Engine/IO/IO.h"
 #include "Engine/Bindings/GLShaderBindings.h"
-#include "../../Engine/MainLoop/IStateHolder.h"
-#include <SDL2/SDL.h>
+#include "Engine/MainLoop/IStateHolder.h"
 
 LoadingScreenState::LoadingScreenState(IState *stateToLoad)
 {
     this->stateToLoad = stateToLoad;
 }
 
-void LoadingScreenState::initialize(IStateHolder *stateHolder, IUserInputGetter *userInput, const glm::ivec2 resolution)
+void LoadingScreenState::initialize(IMainLoopGetter *mainLoopGetter)
 {
-    this->stateHolder = stateHolder;
-    this->userInput = userInput;
-    this->resolution = resolution;
+    this->mainLoopGetter = mainLoopGetter;
 }
 
 void LoadingScreenState::destroy()
@@ -76,6 +73,11 @@ void LoadingScreenState::update(const GLfloat deltatime)
 
 }
 
+void LoadingScreenState::preDraw()
+{
+
+}
+
 void LoadingScreenState::draw()
 {
     this->loadingTexture.bind();
@@ -87,11 +89,6 @@ void LoadingScreenState::draw()
     vao.unbind();
 }
 
-void LoadingScreenState::preDraw()
-{
-
-}
-
 void LoadingScreenState::postDraw()
 {
 
@@ -99,17 +96,16 @@ void LoadingScreenState::postDraw()
 
 void LoadingScreenState::input(const GLfloat deltatime)
 {
-    SDL_Event event;
-    if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
-        this->stateHolder->popAllStates();
 }
 
 void LoadingScreenState::first()
 {
+    IStateHolder *stateHolder = this->mainLoopGetter->getStateHolder();
+
     if(this->cyclesPassed > 10)
     {
         this->stateToLoad->loadResources();
-        this->stateHolder->replaceState(this->stateToLoad);
+        stateHolder->replaceState(this->stateToLoad);
     }
 }
 

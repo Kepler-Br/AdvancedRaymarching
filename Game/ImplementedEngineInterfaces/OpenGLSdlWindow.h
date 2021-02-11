@@ -24,8 +24,7 @@ public:
     ~OpenGLSdlWindow();
     // IStateWindow implementation.
     glm::ivec2 getResolution() const noexcept override;
-    void disableClean() noexcept override;
-    void enableClean() noexcept override;
+    void setClean(GLboolean shouldCleanWindow) noexcept override;
     void setTitle(const std::string &newTitle) noexcept override;
     // IWindow implementation.
     void swapBuffers() noexcept override;

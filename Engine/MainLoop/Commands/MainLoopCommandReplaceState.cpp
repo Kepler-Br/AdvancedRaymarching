@@ -1,25 +1,29 @@
 #include "MainLoopCommandReplaceState.h"
-#include "../IState.h"
 #include <stdexcept>
-#include "../IStateHolder.h"
+#include "../IMainLoopGetter.h"
+#include "../IState.h"
 
 void MainLoopCommandReplaceState::initialize(std::stack<IState *> *stateStack, IState *stateToEmplaceWith,
-                                             IStateHolder *stateHolder, glm::ivec2 screenResolution,
-                                             IUserInputGetter *userInput) noexcept
+                                             IMainLoopGetter *mainLoopGetter) noexcept
 {
     this->stateStack = stateStack;
     this->stateToEmplaceWith = stateToEmplaceWith;
-    this->stateHolder = stateHolder;
-    this->screenResolution = screenResolution;
-    this->userInput = userInput;
+    this->mainLoopGetter = mainLoopGetter;
 }
 
 void MainLoopCommandReplaceState::execute() const
 {
-    this->stateHolder->popState();
-    this->stateToEmplaceWith->initialize(this->stateHolder,
-                                         this->userInput,
-                                        this->screenResolution);
+    IState *state;
+
+    if (this->stateStack == nullptr || this->stateToEmplaceWith == nullptr || mainLoopGetter == nullptr)
+        throw std::runtime_error("Command was not initialized.");
+    if (this->stateStack->empty())
+        throw std::runtime_error("State stack is empty. Nothing to replace.");
+    this->stateToEmplaceWith->initialize(this->mainLoopGetter);
     this->stateToEmplaceWith->loadResources();
-    this->stateHolder->pushState(this->stateToEmplaceWith);
+    state = this->stateStack->top();
+    state->destroy();
+    this->stateStack->pop();
+    delete state;
+    this->stateStack->push(this->stateToEmplaceWith);
 }

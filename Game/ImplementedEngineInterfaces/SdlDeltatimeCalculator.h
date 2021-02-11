@@ -11,7 +11,7 @@ private:
 
 public:
     void calculate() noexcept override;
-    GLfloat get() const noexcept override;
+    const GLfloat get() const noexcept override;
 private:
 
 };

@@ -5,7 +5,7 @@ void SdlDeltatimeCalculator::calculate() noexcept
 
 }
 
-GLfloat SdlDeltatimeCalculator::get() const noexcept
+const GLfloat SdlDeltatimeCalculator::get() const noexcept
 {
-    return 1.0;
+    return 1.0f;
 }

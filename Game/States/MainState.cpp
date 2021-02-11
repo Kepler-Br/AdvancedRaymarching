@@ -4,11 +4,9 @@
 #include "Engine/Bindings/GLShaderBindings.h"
 #include "../../Engine/MainLoop/IStateHolder.h"
 
-void MainState::initialize(IStateHolder *stateHolder, IUserInputGetter *userInput, const glm::ivec2 resolution)
+void MainState::initialize(IMainLoopGetter *mainLoopGetter)
 {
-    this->stateHolder = stateHolder;
-    this->userInput = userInput;
-    this->resolution = resolution;
+    this->mainLoopGetter = mainLoopGetter;
 }
 
 void MainState::destroy()
@@ -95,8 +93,10 @@ void MainState::postDraw()
 void MainState::input(const GLfloat deltatime)
 {
     SDL_Event event;
+    IStateHolder *stateHolder = this->mainLoopGetter->getStateHolder();
+
     if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
-        this->stateHolder->popAllStates();
+        stateHolder->popAllStates();
 }
 
 void MainState::first()

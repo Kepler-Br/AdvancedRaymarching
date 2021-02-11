@@ -1,6 +1,7 @@
 #include "GLTextureBindings.h"
 
-GLuint GLTextureBindings::generateTexture() {
+GLuint GLTextureBindings::generateTexture()
+{
     static const GLsizei textureNumber = 1;
     GLuint texturePointer;
 
@@ -9,14 +10,16 @@ GLuint GLTextureBindings::generateTexture() {
     return texturePointer;
 }
 
-void GLTextureBindings::bindTexture(GLenum target, GLuint texturePointer) {
+void GLTextureBindings::bindTexture(GLenum target, GLuint texturePointer)
+{
     glBindTexture(target, texturePointer);
     GLError::throwExceptionIfGLError("Cannot generate texture pointer");
 }
 
 void GLTextureBindings::uploadTexture2D(const GLenum target, const GLint levelOfDetail, GLenum internalTextureColorFormat,
                                         const GLsizei width, const GLsizei height, const GLenum textureColorFormat,
-                                        const GLenum dataType, const GLvoid *data) {
+                                        const GLenum dataType, const GLvoid *data)
+{
     static const GLint border = 0;
 
     glTexImage2D(target, levelOfDetail, internalTextureColorFormat,
@@ -24,12 +27,14 @@ void GLTextureBindings::uploadTexture2D(const GLenum target, const GLint levelOf
     GLError::throwExceptionIfGLError("Cannot upload texture to GPU");
 }
 
-void GLTextureBindings::generateMipmap(const GLenum textureTarget) {
+void GLTextureBindings::generateMipmap(const GLenum textureTarget)
+{
     glGenerateMipmap(textureTarget);
     GLError::throwExceptionIfGLError("Cannot generate Mipmap");
 }
 
-void GLTextureBindings::setParameterInt(const GLenum textureTarget, const GLenum parameterName, const GLint parameter) {
+void GLTextureBindings::setParameterInt(const GLenum textureTarget, const GLenum parameterName, const GLint parameter)
+{
     glTexParameteri(textureTarget, parameterName, parameter);
     GLError::throwExceptionIfGLError("Cannot set texture parameter");
 }

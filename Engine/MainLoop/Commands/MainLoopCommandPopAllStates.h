@@ -7,6 +7,7 @@
 class IState;
 
 /// @brief Command pattern that will pop all available states in MainLoop.
+/// @see IMainLoopCommand.
 class MainLoopCommandPopAllStates : public virtual IMainLoopCommand
 {
 public:
@@ -17,7 +18,6 @@ private:
 public:
     /// @brief Command constructor.
     void initialize(std::stack<IState *> *stateStack) noexcept;
-    /// @see IMainLoopCommand.
     void execute() const override;
 
 private:

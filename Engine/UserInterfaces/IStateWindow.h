@@ -12,10 +12,8 @@ public:
     /// @brief Should return window screen resolution.
     /// @return Window resolution.
     virtual glm::ivec2 getResolution() const noexcept = 0;
-    /// @brief Disables IWindow::clean.
-    virtual void disableClean() noexcept = 0;
-    /// @brief Enables IWindow::clean.
-    virtual void enableClean() noexcept = 0;
+    /// @brief Decides whether IWindow should execute IWindow::clean.
+    virtual void setClean(GLboolean shouldCleanWindow) noexcept = 0;
     /// @brief Changes window title.
     virtual void setTitle(const std::string &newTitle) noexcept = 0;
 };
