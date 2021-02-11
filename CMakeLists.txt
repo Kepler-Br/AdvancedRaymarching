@@ -56,7 +56,7 @@ add_executable(AdvancedRaymarching
         Engine/UserInterfaces/IUserInput.h
         Engine/UserInterfaces/IStateWindow.h
         Game/ImplementedEngineInterfaces/OpenGLSdlWindow.h
-        Game/ImplementedEngineInterfaces/OpenGLSdlWindow.cpp Game/ImplementedEngineInterfaces/SdlUserInput.cpp Game/ImplementedEngineInterfaces/SdlUserInput.h Game/ImplementedEngineInterfaces/SdlDeltatimeCalculator.cpp Game/ImplementedEngineInterfaces/SdlDeltatimeCalculator.h Engine/IO/IO.h Game/ImplementedEngineInterfaces/SdlIO.cpp Game/ImplementedEngineInterfaces/SdlIO.h Engine/IO/IO.cpp)
+        Game/ImplementedEngineInterfaces/OpenGLSdlWindow.cpp Game/ImplementedEngineInterfaces/SdlUserInput.cpp Game/ImplementedEngineInterfaces/SdlUserInput.h Game/ImplementedEngineInterfaces/SdlDeltatimeCalculator.cpp Game/ImplementedEngineInterfaces/SdlDeltatimeCalculator.h Engine/IO/IO.h Game/ImplementedEngineInterfaces/SdlIO.cpp Game/ImplementedEngineInterfaces/SdlIO.h Engine/IO/IO.cpp Engine/MainLoop/IMainLoopGetter.h)
 target_link_libraries(${PROJECT_NAME}
         GLEW
         SDL2

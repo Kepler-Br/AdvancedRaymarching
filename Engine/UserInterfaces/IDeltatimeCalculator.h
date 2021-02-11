@@ -11,7 +11,7 @@ public:
     /// @brief Should calculate deltatime every time it's called.
     virtual void calculate() noexcept = 0;
     /// @return Calculated deltatime.
-    virtual GLfloat get() const noexcept = 0;
+    virtual const GLfloat get() const noexcept = 0;
 };
 
 #endif //ADVANCEDRAYMARCHING_IDELTATIMECALCULATOR_H

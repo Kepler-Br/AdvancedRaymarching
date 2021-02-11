@@ -4,6 +4,7 @@
 #include <stack>
 
 /// @brief Interface that each MainLoop state class should implement.
+/// @see IMainLoopCommand.
 class IMainLoopCommand
 {
 public:

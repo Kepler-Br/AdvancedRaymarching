@@ -1,7 +1,6 @@
 #ifndef SDL2OPENGL_ISTATEHOLDER_H
 #define SDL2OPENGL_ISTATEHOLDER_H
 
-
 class IState;
 
 /// @brief Interface is used for passing MainLoop to states

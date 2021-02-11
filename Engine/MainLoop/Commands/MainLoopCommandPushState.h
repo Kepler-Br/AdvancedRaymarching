@@ -3,32 +3,32 @@
 
 #include "IMainLoopCommand.h"
 #include <stack>
-#include <glm/vec2.hpp>
 
 class MainLoop;
 class IState;
 class IUserInputGetter;
+class IMainLoopGetter;
 class IStateHolder;
 
 /// @brief Command pattern that will push one state to MainLoop.
+/// @see IMainLoopCommand.
 class MainLoopCommandPushState : public virtual IMainLoopCommand
 {
 public:
 
 private:
     std::stack<IState *> *stateStack = nullptr;
-    IUserInputGetter *userInput = nullptr;
+    IMainLoopGetter *mainLoopGetter = nullptr;
     IState *stateToPush = nullptr;
-    IStateHolder *stateHolder;
-    glm::ivec2 screenResolution;
     size_t maximumStates;
 
 public:
     /// @brief Command constructor.
-    void initialize(std::stack<IState *> *stateStack, IState *stateToPush, IStateHolder *stateHolder,
-                    size_t maximumStates, glm::ivec2 screenResolution, IUserInputGetter *userInput) noexcept;
-    /// @see IMainLoopCommand.
+    void initialize(std::stack<IState *> *stateStack, IState *stateToPush,
+                    size_t maximumStates, IMainLoopGetter *mainLoopGetter) noexcept;
     /// @throw std::runtime_error if maximum state number exceeded such in MainLoop.
+    /// @throw std::runtime_error if command was not initialized.
+    /// @warning May throw anything that state throws during initialization or resource loading.
     void execute() const override;
 
 private:

@@ -19,14 +19,9 @@ glm::ivec2 OpenGLSdlWindow::getResolution() const noexcept
     return resolution;
 }
 
-void OpenGLSdlWindow::disableClean() noexcept
+void OpenGLSdlWindow::setClean(GLboolean shouldCleanWindow) noexcept
 {
-    this->isCleanEnabled = GL_FALSE;
-}
-
-void OpenGLSdlWindow::enableClean() noexcept
-{
-    this->isCleanEnabled = GL_TRUE;
+    this->isCleanEnabled = shouldCleanWindow;
 }
 
 void OpenGLSdlWindow::setTitle(const std::string &newTitle) noexcept
