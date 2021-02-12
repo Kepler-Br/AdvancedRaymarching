@@ -1,24 +1,24 @@
-#include "GLTexture2D.h"
+#include "Texture2D.h"
 
-GLTexture2D::GLTexture2D(const GLsizei width, const GLsizei height, const GLvoid *textureData,
-                        const GLenum internalPixelFormat, const GLenum texturePixelFormat,
-                        const GLenum dataType, const GLboolean unbind)
+Texture2D::Texture2D(const GLsizei width, const GLsizei height, const GLvoid *textureData,
+                     const GLenum internalPixelFormat, const GLenum texturePixelFormat,
+                     const GLenum dataType, const GLboolean unbind)
 {
     this->initialize(width, height, textureData, internalPixelFormat, texturePixelFormat, dataType, unbind);
 }
 
-GLTexture2D::GLTexture2D(const std::tuple<glm::ivec2, std::vector<GLbyte>> &data, const GLenum internalPixelFormat,
-                         const GLenum texturePixelFormat, const GLenum dataType, const GLboolean unbind)
+Texture2D::Texture2D(const std::tuple<glm::ivec2, std::vector<GLbyte>> &data, const GLenum internalPixelFormat,
+                     const GLenum texturePixelFormat, const GLenum dataType, const GLboolean unbind)
 {
     this->initialize(data, internalPixelFormat, texturePixelFormat, dataType, unbind);
 }
 
-void GLTexture2D::generateMipmap() const
+void Texture2D::generateMipmap() const
 {
     GLTextureBindings::generateMipmap(GL_TEXTURE_2D);
 }
 
-void GLTexture2D::setWrap(const GLint wrapMode, const GLboolean rebind) const
+void Texture2D::setWrap(const GLint wrapMode, const GLboolean rebind) const
 {
     if(rebind)
         this->bind();
@@ -28,7 +28,7 @@ void GLTexture2D::setWrap(const GLint wrapMode, const GLboolean rebind) const
         this->unbind();
 }
 
-void GLTexture2D::setMagnifyingFilter(const GLint filterType, const GLboolean rebind) const
+void Texture2D::setMagnifyingFilter(const GLint filterType, const GLboolean rebind) const
 {
     if(rebind)
         this->bind();
@@ -37,7 +37,7 @@ void GLTexture2D::setMagnifyingFilter(const GLint filterType, const GLboolean re
         this->unbind();
 }
 
-void GLTexture2D::setMinifyingFilter(const GLint filterType, const GLboolean rebind) const
+void Texture2D::setMinifyingFilter(const GLint filterType, const GLboolean rebind) const
 {
     if(rebind)
         this->bind();
@@ -46,19 +46,19 @@ void GLTexture2D::setMinifyingFilter(const GLint filterType, const GLboolean reb
         this->unbind();
 }
 
-void GLTexture2D::bind() const
+void Texture2D::bind() const
 {
     GLTextureBindings::bindTexture(GL_TEXTURE_2D, this->texturePointer);
 }
 
-void GLTexture2D::unbind() const
+void Texture2D::unbind() const
 {
     if (this->texturePointer == 0)
         throw std::runtime_error("Cannot destroy already destroyed texture.");
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void GLTexture2D::destroy()
+void Texture2D::destroy()
 {
     if (this->texturePointer == 0)
         throw std::runtime_error("Cannot destroy already destroyed texture.");
@@ -66,9 +66,9 @@ void GLTexture2D::destroy()
     this->texturePointer = 0;
 }
 
-void GLTexture2D::initialize(const GLsizei width, const GLsizei height, const GLvoid *textureData,
-                             const GLenum internalPixelFormat, const GLenum texturePixelFormat,
-                             const GLenum dataType, const GLboolean unbind)
+void Texture2D::initialize(const GLsizei width, const GLsizei height, const GLvoid *textureData,
+                           const GLenum internalPixelFormat, const GLenum texturePixelFormat,
+                           const GLenum dataType, const GLboolean unbind)
 {
     static const GLint levelOfDetail = 0;
     // Should be 0. Dunno why. Legacy.
@@ -84,8 +84,8 @@ void GLTexture2D::initialize(const GLsizei width, const GLsizei height, const GL
         this->unbind();
 }
 
-void GLTexture2D::initialize(const std::tuple<glm::ivec2, std::vector<GLbyte>> &data, const GLenum internalPixelFormat,
-                             const GLenum texturePixelFormat, const GLenum dataType, const GLboolean unbind)
+void Texture2D::initialize(const std::tuple<glm::ivec2, std::vector<GLbyte>> &data, const GLenum internalPixelFormat,
+                           const GLenum texturePixelFormat, const GLenum dataType, const GLboolean unbind)
 {
     glm::ivec2 resolution;
     std::vector<GLbyte> pixels;

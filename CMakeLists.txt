@@ -15,20 +15,20 @@ add_executable(AdvancedRaymarching
         Engine/Incapsulated/Shader.cpp
         Engine/Exceptions/ShaderErrorException.h
         Engine/Incapsulated/GLError.h
-        Engine/Incapsulated/GLBuffer.h
+        Engine/Incapsulated/VertexBuffer.h
         Engine/Exceptions/GLErrorException.h
         Engine/Bindings/GLShaderBindings.h
         Engine/Bindings/GLShaderBindings.cpp
         Engine/Incapsulated/GLError.cpp
-        Engine/Incapsulated/GLVertexArrayObject.h
+        Engine/Incapsulated/VertexArrayObject.h
         Engine/Bindings/GLBufferBindings.h
         Engine/Bindings/GLBufferBindings.cpp
-        Engine/Incapsulated/GLVertexArrayObject.cpp
-        Engine/Incapsulated/GLTexture2D.h
+        Engine/Incapsulated/VertexArrayObject.cpp
+        Engine/Incapsulated/Texture2D.h
         Engine/Bindings/GLTextureBindings.h
         Engine/Bindings/GLTextureBindings.cpp
         Engine/UserInterfaces/IIO.h
-        Engine/Incapsulated/GLTexture2D.cpp
+        Engine/Incapsulated/Texture2D.cpp
         Engine/MainLoop/MainLoop.h
         Engine/MainLoop/MainLoop.cpp
         Engine/MainLoop/IStateHolder.h
@@ -48,8 +48,8 @@ add_executable(AdvancedRaymarching
         Game/States/LoadingScreenState.h
         Game/States/MainState.cpp
         Game/States/MainState.h
-        Engine/Incapsulated/GLFramebuffer.cpp
-        Engine/Incapsulated/GLFramebuffer.h
+        Engine/Incapsulated/Framebuffer.cpp
+        Engine/Incapsulated/Framebuffer.h
         Engine/Exceptions/IOException.h
         Engine/UserInterfaces/IWindow.h
         Engine/UserInterfaces/IDeltatimeCalculator.h

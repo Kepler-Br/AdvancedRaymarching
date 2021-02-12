@@ -5,7 +5,7 @@
 #include <GL/gl.h>
 
 /// @brief Encapsulation over OpenGL Vertex Array Object.
-class GLVertexArrayObject
+class VertexArrayObject
 {
 public:
 
@@ -18,7 +18,7 @@ public:
     /// @see GLBufferBindings::generateVertexArray<br/>
     /// Khronos OpenGL reference:<br/>
     /// <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGenVertexArrays.xhtml">glGenVertexArrays</a>
-    GLVertexArrayObject();
+    VertexArrayObject();
 
     /// @brief Bind VAO to OpenGL.
     /// @see Khronos OpenGL reference:<br/>
