@@ -9,7 +9,7 @@
 #include <tuple>
 
 /// @brief Encapsulation over OpenGL texture routine.
-class GLTexture2D
+class  Texture2D
 {
 public:
 
@@ -17,14 +17,14 @@ private:
     GLuint texturePointer = 0;
 
 public:
-    /// @see GLTexture2D::initialize.
-    GLTexture2D(const GLsizei width, const GLsizei height, const GLvoid *textureData, const GLenum internalPixelFormat,
-                const GLenum texturePixelFormat, const GLenum dataType = GL_UNSIGNED_BYTE,
-                const GLboolean unbind = GL_TRUE);
-    /// @see GLTexture2D::initialize.
-    GLTexture2D(const std::tuple<glm::ivec2, std::vector<GLbyte>> &data, const GLenum internalPixelFormat, const GLenum texturePixelFormat,
-                const GLenum dataType = GL_UNSIGNED_BYTE, const GLboolean unbind = GL_TRUE);
-    GLTexture2D() = default;
+    /// @see Texture2D::initialize.
+    Texture2D(const GLsizei width, const GLsizei height, const GLvoid *textureData, const GLenum internalPixelFormat,
+              const GLenum texturePixelFormat, const GLenum dataType = GL_UNSIGNED_BYTE,
+              const GLboolean unbind = GL_TRUE);
+    /// @see Texture2D::initialize.
+    Texture2D(const std::tuple<glm::ivec2, std::vector<GLbyte>> &data, const GLenum internalPixelFormat, const GLenum texturePixelFormat,
+              const GLenum dataType = GL_UNSIGNED_BYTE, const GLboolean unbind = GL_TRUE);
+    Texture2D() = default;
 
     /// @brief Generate mipmap for this texture.
     /// @throw GLErrorException if OpenGL was unable to generate mipmap.

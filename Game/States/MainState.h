@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include "Engine/MainLoop/IState.h"
-#include "Engine/Incapsulated/GLTexture2D.h"
-#include "Engine/Incapsulated/GLBuffer.h"
+#include "Engine/Incapsulated/Texture2D.h"
+#include "Engine/Incapsulated/VertexBuffer.h"
 #include "Engine/Incapsulated/Shader.h"
-#include "Engine/Incapsulated/GLVertexArrayObject.h"
+#include "Engine/Incapsulated/VertexArrayObject.h"
 #include "Engine/UserInterfaces/IIO.h"
 #include "Engine/MainLoop/IMainLoopGetter.h"
 
@@ -16,11 +16,11 @@ public:
 
 private:
     GLboolean resourcesLoaded = GL_FALSE;
-    GLTexture2D loadingTexture;
-    GLBuffer<GLfloat> vertexBuffer;
-    GLBuffer<GLfloat> textureBuffer;
+    Texture2D loadingTexture;
+    VertexBuffer<GLfloat> vertexBuffer;
+    VertexBuffer<GLfloat> textureBuffer;
     Shader shader;
-    GLVertexArrayObject vao;
+    VertexArrayObject vao;
     IMainLoopGetter *mainLoopGetter;
 
 public:

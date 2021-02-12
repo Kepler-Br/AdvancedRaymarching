@@ -73,7 +73,7 @@ void MainState::draw()
 {
     this->loadingTexture.bind();
     shader.use();
-    GLuint uniformLocation = shader.getUniformLocation("inputTexture");
+    GLuint uniformLocation = shader.getUniformLocation("tex");
     GLShaderBindings::setUniform(uniformLocation, 0);
     vao.bind();
     glDrawArrays(GL_QUADS, 0, 8);

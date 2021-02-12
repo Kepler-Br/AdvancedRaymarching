@@ -2,7 +2,7 @@
 #define SDL2OPENGL_GLFRAMEBUFFER_H
 
 
-class GLFramebuffer
+class Framebuffer
 {
 
 };

@@ -1,17 +1,17 @@
-#include "GLVertexArrayObject.h"
+#include "VertexArrayObject.h"
 #include "../Bindings/GLBufferBindings.h"
 
-GLVertexArrayObject::GLVertexArrayObject()
+VertexArrayObject::VertexArrayObject()
 {
     this->object = GLBufferBindings::generateVertexArray();
 }
 
-void GLVertexArrayObject::bind() const noexcept
+void VertexArrayObject::bind() const noexcept
 {
     glBindVertexArray(this->object);
 }
 
-void GLVertexArrayObject::unbind() const noexcept
+void VertexArrayObject::unbind() const noexcept
 {
     glBindVertexArray(0);
 }

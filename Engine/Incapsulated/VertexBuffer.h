@@ -5,14 +5,14 @@
 #include <vector>
 #include <cstring>
 #include <stdexcept>
-#include "GLBuffer.h"
+#include "VertexBuffer.h"
 #include "GLError.h"
 #include "../Bindings/GLBufferBindings.h"
 
 /// @brief Encapsulated OpenGL's Vertex Buffer Object capable of uploading data to GPU.
 /// @tparam T should only be simple types like int, double, float.
 template <typename T>
-class GLBuffer
+class VertexBuffer
 {
 private:
     GLenum target = 0;
@@ -20,19 +20,19 @@ private:
     T *array = nullptr;
 
 public:
-    /// @see GLBuffer::initialize
-    GLBuffer(std::vector<T> array, const GLenum target, const GLenum usage, GLboolean unbind = GL_TRUE)
+    /// @see VertexBuffer::initialize
+    VertexBuffer(std::vector<T> array, const GLenum target, const GLenum usage, GLboolean unbind = GL_TRUE)
     {
         this->initialize(array, target, usage);
     }
 
-    /// @see GLBuffer::initialize
-    GLBuffer(const T *array, const size_t arraySize, const GLenum target, const GLenum usage, GLboolean unbind = GL_TRUE)
+    /// @see VertexBuffer::initialize
+    VertexBuffer(const T *array, const size_t arraySize, const GLenum target, const GLenum usage, GLboolean unbind = GL_TRUE)
     {
         this->initialize(array, arraySize, target, usage);
     }
 
-    GLBuffer() = default;
+    VertexBuffer() = default;
 
     /// @brief Initialize internal array from input array and upload it to GPU.
     /// @param array Input array that should be uploaded to GPU.
@@ -49,7 +49,7 @@ public:
     void initialize(const T *array, const size_t arraySize, const GLenum target, const GLenum usage, GLboolean unbind = GL_TRUE)
     {
         if (this->array != nullptr)
-            throw std::runtime_error("Cannot initialize GLBuffer twice.");
+            throw std::runtime_error("Cannot initialize VertexBuffer twice.");
         this->target = target;
         this->array = new T[arraySize];
         std::memcpy(this->array, array, arraySize * sizeof(T));
@@ -76,7 +76,7 @@ public:
         const size_t arraySize = array.size();
 
         if (this->array != nullptr)
-            throw std::runtime_error("Cannot initialize GLBuffer twice.");
+            throw std::runtime_error("Cannot initialize VertexBuffer twice.");
         this->target = target;
         this->array = new T[arraySize];
         std::memcpy(this->array, array.data(), arraySize);
@@ -109,12 +109,12 @@ public:
     /// @see GLBufferBindings::deleteBuffer<br/>
     /// Khronos OpenGL reference:<br/>
     /// <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDeleteBuffers.xhtml">glDeleteBuffers</a>
-    /// @throw std::runtime_error if GLBuffer#array is nullptr. In other words instance is not initialized.<br>
+    /// @throw std::runtime_error if VertexBuffer#array is nullptr. In other words instance is not initialized.<br>
     /// @throw GLErrorException from GLBufferBindings::deleteBuffer.
     void destroy()
     {
         if (this->array == nullptr)
-            throw std::runtime_error("Cannot destroy GLBuffer twice.");
+            throw std::runtime_error("Cannot destroy VertexBuffer twice.");
         delete[] this->array;
         this->array = nullptr;
         GLBufferBindings::deleteBuffer(this->glBufferPointer);
