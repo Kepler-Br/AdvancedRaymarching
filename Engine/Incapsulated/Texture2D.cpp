@@ -93,3 +93,10 @@ void Texture2D::initialize(const std::tuple<glm::ivec2, std::vector<GLbyte>> &da
     std::tie(resolution, pixels) = data;
     this->initialize(resolution.x, resolution.y, pixels.data(), internalPixelFormat, texturePixelFormat, dataType, unbind);
 }
+
+const GLuint Texture2D::getPointer() const
+{
+    if (this->texturePointer == 0)
+        throw std::runtime_error("Texture is not initialized.");
+    return this->texturePointer;
+}
