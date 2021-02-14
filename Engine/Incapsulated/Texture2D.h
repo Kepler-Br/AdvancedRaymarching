@@ -122,6 +122,9 @@ public:
     void initialize(const std::tuple<glm::ivec2, std::vector<GLbyte>> &data, const GLenum internalPixelFormat,
                     const GLenum texturePixelFormat, const GLenum dataType = GL_UNSIGNED_BYTE,
                     const GLboolean unbind = GL_TRUE);
+    /// @brief Returns OpenGL texture pointer. In case if you want to call something OpenGL stuff on it.
+    /// @return OpenGL texture pointer.
+    const GLuint getPointer() const;
 
 private:
 };
