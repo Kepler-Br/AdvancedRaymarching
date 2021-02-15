@@ -1,7 +1,7 @@
 #include "GLFramebufferBindings.h"
 #include "../Incapsulated/GLError.h"
 
-const GLuint GLFramebufferBindings::generateFramebuffer()
+const GLuint GLFramebufferBindings::generate()
 {
     GLuint pointer;
 
@@ -15,4 +15,10 @@ void GLFramebufferBindings::attachTexture2D(const GLenum target, const GLenum at
 {
     glFramebufferTexture2D(target, attachment, textureTarget, texturePointer, mipmapLevel);
     GLError::throwExceptionIfGLError("glFramebufferTexture2D");
+}
+
+void GLFramebufferBindings::bind(const GLenum target, const GLuint pointer)
+{
+    glBindFramebuffer(target, pointer);
+    GLError::throwExceptionIfGLError("glBindFramebuffer");
 }

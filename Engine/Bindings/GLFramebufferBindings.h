@@ -10,9 +10,10 @@ private:
     GLFramebufferBindings() = default;
 
 public:
-    static const GLuint generateFramebuffer();
+    static const GLuint generate();
     static void attachTexture2D(const GLenum target, const GLenum attachment, const GLenum textureTarget,
                                 const GLuint texturePointer, const GLint mipmapLevel);
+    static void bind(const GLenum target, const GLuint pointer);
 };
 
 
