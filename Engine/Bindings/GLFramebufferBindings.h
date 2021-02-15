@@ -10,13 +10,9 @@ private:
     GLFramebufferBindings() = default;
 
 public:
-    static const GLuint generateFramebuffer()
-    {
-        GLuint pointer;
-
-        glGenFramebuffers(1, &pointer);
-        GLError::throwExceptionIfGLError("glGenFramebuffers");
-    }
+    static const GLuint generateFramebuffer();
+    static void attachTexture2D(const GLenum target, const GLenum attachment, const GLenum textureTarget,
+                                const GLuint texturePointer, const GLint mipmapLevel);
 };
 
 
