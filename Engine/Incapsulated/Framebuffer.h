@@ -20,50 +20,19 @@ public:
 private:
 
 public:
-    Framebuffer(const GLuint width, const GLuint height)
-    {
+    Framebuffer(const GLuint width, const GLuint height, GLboolean unbind = GL_TRUE);
 
-    }
-
-    Framebuffer(const glm::ivec2 resolution)
-    {
-
-    }
+    Framebuffer(const glm::ivec2 resolution, GLboolean unbind = GL_TRUE);
 
     Framebuffer() = default;
 
-    void initialize(const GLuint width, const GLuint height)
-    {
-        this->resolution = {width, height};
-        this->colorTexture = Texture2D(width, height, nullptr,
-                                       GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, GL_FALSE);
-        this->depthStencilTexture = Texture2D(width, height, nullptr,
-                                              GL_DEPTH24_STENCIL8, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, GL_TRUE);
-        glGenFramebuffers(1, &this->framebufferPointer);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-                               GL_TEXTURE_2D, this->colorTexture.getPointer(), 0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
-                               GL_TEXTURE_2D, this->depthStencilTexture.getPointer(), 0);
-    }
+    void initialize(const GLuint width, const GLuint height, GLboolean unbind = GL_TRUE);
 
-    void initialize(const glm::ivec2 resolution)
-    {
-        this->initialize(resolution.x, resolution.y);
-    }
+    void initialize(const glm::ivec2 resolution, GLboolean unbind = GL_TRUE);
 
-    const GLuint getPointer() const
-    {
-        if (framebufferPointer == 0)
-            throw std::runtime_error("Framebuffer is not initialized.");
-        return this->framebufferPointer;
-    }
+    const GLuint getPointer() const;
 
-    const glm::ivec2 getResolution() const
-    {
-        if (framebufferPointer == 0)
-            throw std::runtime_error("Framebuffer is not initialized.");
-        return this->resolution;
-    }
+    const glm::ivec2 getResolution() const;
 
 };
 
